@@ -1,0 +1,20 @@
+1. Overview
+src/ contains all source code of WiBench
+
+2. Structure
+app/			:sample app using the kernels and channel
+	
+	app/LTESys/	:LTE Uplink system
+ 	app/LTESysHarq/	:LTE Uplink System with HARQ scheme
+
+channel/		:channel component, config different channel see channel/README
+
+harq/			:implementing of harq scheme (harq relies on the lte system; it's meaningless to run harq itself.) 
+
+include/		:all header files
+
+kernel/			:eight individual kernels as: 	Equalizer/ ModDemod/ RateMatcher/ SCFDMA/ ScrambDescramb/ SubCarrierMapDemap/ Turbo/
+							To config specific kernel, refer to "specific kernel dir"/README
+
+util/			:supporting components for all kernels and app
+

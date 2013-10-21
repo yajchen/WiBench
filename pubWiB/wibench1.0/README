@@ -1,0 +1,34 @@
+WiBench 1.0
+
+I. Overview
+The Univeristy of Michigan WiBench is an open source kernel suite for benchmarking wireless system.
+
+II.Usage
+
+1. Package Structure
+
+wibench/build		:binary executables
+wibench/common		:common configuration file
+wibench/data		:input files and reference output files
+wibench/doc		:description of implementation wireless kernels and apps
+wibench/src		:source code for the wireless kernels and app implementations
+wibench/dep		:dependent input file; rsc.txt is the input for fsm
+
+2. Build wibench
+
+Modify the wibench/common/makefile.config file to change the settings of wibench home directory
+
+To compile app (the lte uplink system and the lte uplink system with harq scheme): make app
+To compile each kernel: make kernel
+To compile both app and kernel: make
+
+3. Run wibench
+
+To run app, go to build/app
+
+To run each kernel, go to build/kernel
+
+III.Contact:
+
+Yajing Chen: 	yajchen@umich.edu
+Qi Zheng:  	qizheng@umich.edu
