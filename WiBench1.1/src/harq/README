@@ -1,0 +1,31 @@
+Hybrid Automatic Repeat Request (abbr: HARQ)
+
+Key feature: For one subframe: combine soft information of multiple transmission
+
+This kernel must rely on the lte system; it's no meanning to run this kernel independent.
+
+InBufSz[2]:  define the input buffer size which is a InBufSz[0]-by-InBufSz[1] matrix
+OutBufSz[2]: define the output buffer size which is a OutBufSz[0]-by-OutBufSz[1] matrix
+
+NumMaxTrans: set the maximum tranmissions.
+
+1.GetTxBitsFromTxRateMatch(int *pEB):
+Get and store Current Package subframe from TxRateMatch
+
+2.int* GetpBufferTxBits(void): return the pointer pBufferTxBits
+  void GetpBufferTxBits(FIFO<int> *pReTransBuf) : directly write pBufferTxBits into FIFO:pReTransBuf
+
+3.GetSoftInfoFromRxRateMatch(float *pSI): used in the 1st time transmission. Get Soft information from RxRateMatch and store the value in pBufferCurrSoftInfo
+  GetSoftInfoFromRxRateMatch(FIFO<float> *pInpBuf): used in retransmission. Read Soft information from buffer before HARQ and store the value in pBufferCurrSoftinfo
+
+4.CombineSoftInformation(void): Combine previous soft information and current soft information; initial value of pCombinedSoftInfo is all 0;
+                               For the 1st time transmission, it acts like copy pBufferCurrSoftInfo to pCombinedSoftInfo 
+                               For all restransmissions: before 'combine': pCombinedSoftInfo is actually the mixed soft information for all previous transmission
+                                                         after 'combine': pCombinedSoftInfo mix up all previous transmission and current tranmission soft information
+
+5.SetReTransmissionFlag(int NumErrBit,int CurTransNum): return true iff((err exists after current transmission)and(total transmission of this packet <= NumMaxTrans))
+
+6.float* GetpCombinedSoftInfo(void): return the pointer pCombinedSoftInfo
+  void GetpCombinedSoftInfo(FIFO<float> *pOutBuf): directly write pCombinedSoftInfo into FIFO:pOutBuf
+
+
