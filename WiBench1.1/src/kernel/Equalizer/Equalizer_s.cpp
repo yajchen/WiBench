@@ -83,7 +83,10 @@ if(BufFlag)
 else
 {}
 //////////////////////End of clac in/out buffer size//////////////////////
-
+////////////////////// Initialize its own Input Buffer //////////////////////////
+pInpBuf =new FIFO<complex<float> >[1];
+(*pInpBuf).initFIFO(1,InBufSz);
+//////////////////End of initialization of its own input buffer//////////////////
 }
 
 void Equalizer::FDLSEstimation(complex<float>** pXt,complex<float>** pXtDagger,complex<float>** pYt,complex<float>** pHTranspose,int NumLayer)
@@ -281,7 +284,7 @@ void Equalizer::LSFreqDomain(void)
   int MDFT=MDFTPerUser;
   int NumLayer=NumLayerPerUser;
   pDMRS=(*VpUser).GetpDMRS();
-  bool ReadFlag = (*VpInpBuf).Read(pInpData);
+  bool ReadFlag = (*pInpBuf).Read(pInpData);
   if(ReadFlag)
   {
   
@@ -351,21 +354,21 @@ void Equalizer::LSFreqDomain(void)
 
 }
 
-void Equalizer::Equalizing(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf)
+void Equalizer::Equalizing(FIFO<complex<float> >* pOutBuf)
 {
 if(PSFlag)
 {cout<<"Equalizing"<<endl;}
-VpInpBuf=pInpBuf;
+//VpInpBuf=pInpBuf;
 VpOutBuf=pOutBuf;
 LSFreqDomain();
 }
 
 
-void Equalizer::Equalizing(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf,complex<float>***pPCSI,float AWGNNo)
+void Equalizer::Equalizing(FIFO<complex<float> >* pOutBuf,complex<float>***pPCSI,float AWGNNo)
 {
 if(PSFlag)
 {cout<<"Equalizing"<<endl;}
-VpInpBuf=pInpBuf;
+//VpInpBuf=pInpBuf;
 VpOutBuf=pOutBuf;
 VpCSI=pPCSI;
 float No=AWGNNo;
@@ -375,7 +378,7 @@ float No=AWGNNo;
 
   int SCLoc = (*VpUser).SCLoc;
 
-  bool ReadFlag = (*VpInpBuf).Read(pInpData);
+  bool ReadFlag = (*pInpBuf).Read(pInpData);
 
   if(ReadFlag)
   {
@@ -443,6 +446,5 @@ delete[] pHdm;
   delete[] pInpData;
   for(int s=0;s<(NumULSymbSF-2)*NumLayerPerUser;s++){delete[] *(pOutData+s);}
   delete[] pOutData;
-
-
+  delete[] pInpBuf;
 }

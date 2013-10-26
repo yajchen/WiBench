@@ -51,9 +51,12 @@ int* pOutSeq;
 
 public:
 int InBufSz[2];
+//Scrambler's FIFO
+FIFO<int> *pInpBuf;
 int OutBufSz[2];
 
   Scramble(UserPara* pUser);
-  void Scrambling(FIFO<int> *pInpBuf, FIFO<int> *pOutBuf);
+//  void Scrambling(FIFO<int> *pInpBuf, FIFO<int> *pOutBuf);
+  void Scrambling(FIFO<int> *pOutBuf);
   ~Scramble(void);
 };

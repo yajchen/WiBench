@@ -80,7 +80,10 @@ if(BufFlag)
 else
 {}
 //////////////////////End of clac in/out buffer size//////////////////////
-
+////////////////////// Initialize its own Input Buffer //////////////////////////
+pInpBuf =new FIFO<float>[1];
+(*pInpBuf).initFIFO(1,InBufSz);
+//////////////////End of initialization of its own input buffer//////////////////
 }
 
 //***************** siso function *****************//
@@ -348,7 +351,7 @@ void TurboDecoder_c::pccc_decoder_bb(
 //**************END pccc function**************//
 
 
-void TurboDecoder_c::TurboDecoding(FIFO<float>* pInpBuf,FIFO<int>* pOutBuf)
+void TurboDecoder_c::TurboDecoding(FIFO<int>* pOutBuf)
 {
 if(PSFlag)
 {cout<<"TurboDecoding"<<endl;}
@@ -393,5 +396,5 @@ TurboDecoder_c::~TurboDecoder_c()
   delete[] pLLR;
   delete[] pData;
   delete[] pLengthSet;
-
+  delete[] pInpBuf;
 }

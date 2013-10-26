@@ -63,11 +63,14 @@ if(BufFlag)
 else
 {}
 //////////////////////End of clac in/out buffer size//////////////////////
-
+////////////////////// Initialize its own Input Buffer //////////////////////////
+pInpBuf =new FIFO<complex<float> >[1];
+(*pInpBuf).initFIFO(1,InBufSz);
+//////////////////End of initialization of its own input buffer//////////////////
 }
 
 
-void SubCarrierDemap::SubCarrierDemapping(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf)
+void SubCarrierDemap::SubCarrierDemapping(FIFO<complex<float> >* pOutBuf)
 {
 if(PSFlag)
 {cout<<"SubCarrierDemapping"<<endl;}
@@ -130,5 +133,5 @@ SubCarrierDemap::~SubCarrierDemap()
 
   for(int s=0;s<NumULSymbSF*NumRxAntenna;s++){delete[] *(pInpData+s);}
   delete[] pInpData;
-
+  delete[] pInpBuf;
 }

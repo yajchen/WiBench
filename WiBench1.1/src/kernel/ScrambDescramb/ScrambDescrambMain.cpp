@@ -41,15 +41,15 @@ BSPara BS;
 BS.initBSPara();
 UserPara User(&BS);
 Scramble SCRB(&User);
-FIFO<int> SCRBIn(1,SCRB.InBufSz);
+//FIFO<int> SCRBIn(1,SCRB.InBufSz);
 FIFO<int> SCRBOut(1,SCRB.OutBufSz);
-//ReadInputFromFiles(&SCRBIn,(SCRB.InBufSz),"ScrambleInput");
-//GeneRandomInput(&SCRBIn,SCRB.InBufSz,"ScrambleRandomInput");
-GeneRandomInput(&SCRBIn,SCRB.InBufSz);
-SCRB.Scrambling(&SCRBIn,&SCRBOut);
-//WriteOutputToFiles(&SCRBOut,(SCRB.OutBufSz),"ScrambleOutput");
+ReadInputFromFiles(SCRB.pInpBuf,(SCRB.InBufSz),"ScrambleInput");
+//GeneRandomInput(SCRB.pInpBuf,SCRB.InBufSz,"ScrambleRandomInput");
+//GeneRandomInput(SCRB.pInpBuf,SCRB.InBufSz);
+SCRB.Scrambling(&SCRBOut);
+WriteOutputToFiles(&SCRBOut,(SCRB.OutBufSz),"testScrambleOutput");
 //WriteOutputToFiles(&SCRBOut,(SCRB.OutBufSz),"ScrambleRandomOutput");
-ReadOutput(&SCRBOut,(SCRB.OutBufSz));
+//ReadOutput(&SCRBOut,(SCRB.OutBufSz));
 return 0;
 }
 #endif
@@ -62,15 +62,15 @@ BSPara BS;
 BS.initBSPara();
 UserPara User(&BS);
 Descramble DSCRB(&BS);
-FIFO<float> DSCRBIn(1,DSCRB.InBufSz);
+//FIFO<float> DSCRBIn(1,DSCRB.InBufSz);
 FIFO<float> DSCRBOut(1,DSCRB.OutBufSz);
-//ReadInputFromFiles(&DSCRBIn,DSCRB.InBufSz,"DescrambleInput");
-//GeneRandomInput(&DSCRBIn,DSCRB.InBufSz,"DescrambleRandomInput");
-GeneRandomInput(&DSCRBIn,DSCRB.InBufSz);
-DSCRB.Descrambling(&DSCRBIn,&DSCRBOut);
-//WriteOutputToFiles(&DSCRBOut,(DSCRB.OutBufSz),"DescrambleOutput");
+ReadInputFromFiles(DSCRB.pInpBuf,DSCRB.InBufSz,"DescrambleInput");
+//GeneRandomInput(DSCRB.pInpBuf,DSCRB.InBufSz,"DescrambleRandomInput");
+//GeneRandomInput(DSCRB.pInpBuf,DSCRB.InBufSz);
+DSCRB.Descrambling(&DSCRBOut);
+WriteOutputToFiles(&DSCRBOut,(DSCRB.OutBufSz),"testDescrambleOutput");
 //WriteOutputToFiles(&DSCRBOut,(DSCRB.OutBufSz),"DescrambleRandomOutput");
-ReadOutput(&DSCRBOut,(DSCRB.OutBufSz));
+//ReadOutput(&DSCRBOut,(DSCRB.OutBufSz));
 return 0;
 }
 #endif

@@ -59,9 +59,12 @@ fftwf_plan ifftplan;
 
 public:
 int InBufSz[2];
+//TransformDecoder's FIFO
+FIFO<complex<float> > *pInpBuf;
 int OutBufSz[2];
 
     TransformDecoder(BSPara* pBS);
-    void TransformDecoding(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf);
+//    void TransformDecoding(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf);
+    void TransformDecoding(FIFO<complex<float> >* pOutBuf);
     ~TransformDecoder(void);
 };

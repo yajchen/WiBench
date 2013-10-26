@@ -65,10 +65,14 @@ if(BufFlag)
 else
 {}
 //////////////////////End of clac in/out buffer size//////////////////////
+////////////////////// Initialize its own Input Buffer //////////////////////////
+pInpBuf =new FIFO<complex<float> >[1];
+(*pInpBuf).initFIFO(1,InBufSz);
+//////////////////End of initialization of its own input buffer//////////////////
 
 }
 
-void SCFDMADemodulation::SCFDMADemodulating(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf)
+void SCFDMADemodulation::SCFDMADemodulating(FIFO<complex<float> >* pOutBuf)
 {
    if(PSFlag)
    {cout<<"SCFDMADemodulating"<<endl;}
@@ -111,4 +115,5 @@ fftwf_destroy_plan(fftplan);
    }
 delete[] pInpData;
 delete[] pOutData;
+delete[] pInpBuf;
 }

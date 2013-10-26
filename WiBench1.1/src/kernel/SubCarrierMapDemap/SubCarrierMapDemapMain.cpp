@@ -31,7 +31,7 @@
 
 #include "SubCarrierMapDemapMain.h"
 int RANDOMSEED;
-#define SCMapper
+#define SCDemapper
 
 #ifdef SCMapper
 int main()
@@ -41,14 +41,14 @@ BSPara BS;
 BS.initBSPara();
 UserPara User(&BS);
 SubCarrierMap SCM(&User);
-FIFO<complex<float> > SCMIn(1,SCM.InBufSz);
+//FIFO<complex<float> > SCMIn(1,SCM.InBufSz);
 FIFO<complex<float> > SCMOut(1,SCM.OutBufSz);
-//ReadInputFromFiles(&SCMIn,(SCM.InBufSz),"SubCarrierMapInputReal","SubCarrierMapInputImag");
-//GeneRandomInput(&SCMIn,SCM.InBufSz,"SubCarrierMapRandomInputReal","SubCarrierMapRandomInputImag");
-GeneRandomInput(&SCMIn,SCM.InBufSz);
-SCM.SubCarrierMapping(&SCMIn,&SCMOut);
-//WriteOutputToFiles(&SCMOut,(SCM.OutBufSz),"SubCarrierMapRandomOutputReal","SubCarrierMapRandomOutputImag");
-ReadOutput(&SCMOut,(SCM.OutBufSz));
+ReadInputFromFiles(SCM.pInpBuf,(SCM.InBufSz),"SubCarrierMapInputReal","SubCarrierMapInputImag");
+//GeneRandomInput(SCM.pInpBuf,SCM.InBufSz,"SubCarrierMapRandomInputReal","SubCarrierMapRandomInputImag");
+//GeneRandomInput(SCM.pInpBuf,SCM.InBufSz);
+SCM.SubCarrierMapping(&SCMOut);
+WriteOutputToFiles(&SCMOut,(SCM.OutBufSz),"testSubCarrierMapOutputReal","testSubCarrierMapOutputImag");
+//ReadOutput(&SCMOut,(SCM.OutBufSz));
 return 0;
 }
 #endif
@@ -61,14 +61,14 @@ BSPara BS;
 BS.initBSPara();
 UserPara User(&BS);
 SubCarrierDemap SCD(&BS);
-FIFO<complex<float> > SCDIn(1,SCD.InBufSz);
+//FIFO<complex<float> > SCDIn(1,SCD.InBufSz);
 FIFO<complex<float> > SCDOut(1,SCD.OutBufSz);
-//ReadInputFromFiles(&SCDIn,(SCD.InBufSz),"SubCarrierDemapInputReal","SubCarrierDemapInputImag");
-//GeneRandomInput(&SCDIn,SCD.InBufSz,"SubCarrierDemapRandomInputReal","SubCarrierDemapRandomInputImag");
-GeneRandomInput(&SCDIn,SCD.InBufSz);
-SCD.SubCarrierDemapping(&SCDIn,&SCDOut);
-//WriteOutputToFiles(&SCDOut,(SCD.OutBufSz),"SubCarrierDemapRandomOutputReal","SubCarrierDemapRandomOutputImag");
-ReadOutput(&SCDOut,(SCD.OutBufSz));
+ReadInputFromFiles(SCD.pInpBuf,(SCD.InBufSz),"SubCarrierDemapInputReal","SubCarrierDemapInputImag");
+//GeneRandomInput(SCD.pInpBuf,SCD.InBufSz,"SubCarrierDemapRandomInputReal","SubCarrierDemapRandomInputImag");
+//GeneRandomInput(SCD.pInpBuf,SCD.InBufSz);
+SCD.SubCarrierDemapping(&SCDOut);
+WriteOutputToFiles(&SCDOut,(SCD.OutBufSz),"testSubCarrierDemapOutputReal","testSubCarrierDemapOutputImag");
+//ReadOutput(&SCDOut,(SCD.OutBufSz));
 return 0;
 }
 #endif

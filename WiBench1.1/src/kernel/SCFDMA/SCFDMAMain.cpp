@@ -41,14 +41,14 @@ BSPara BS;
 BS.initBSPara();
 UserPara User(&BS);
 SCFDMAModulation SCFM(&User);
-FIFO<complex<float> > SCFMIn(1,SCFM.InBufSz);
+//FIFO<complex<float> > SCFMIn(1,SCFM.InBufSz);
 FIFO<complex<float> > SCFMOut(1,SCFM.OutBufSz);
-//ReadInputFromFiles(&SCFMIn,(SCFM.InBufSz),"SCFDMAModulationInputReal","SCFDMAModulationInputImag");
-//GeneRandomInput(&SCFMIn,SCFM.InBufSz,"SCFDMAModulationRandomInputReal","SCFDMAModulationRandomInputImag");
-GeneRandomInput(&SCFMIn,SCFM.InBufSz);
-SCFM.SCFDMAModulating(&SCFMIn,&SCFMOut);
-//WriteOutputToFiles(&SCFMOut,(SCFM.OutBufSz),"SCFDMAModulationOutputReal","SCFDMAModulationOutputImag");
-ReadOutput(&SCFMOut,(SCFM.OutBufSz));
+ReadInputFromFiles(SCFM.pInpBuf,(SCFM.InBufSz),"SCFDMAModulationInputReal","SCFDMAModulationInputImag");
+//GeneRandomInput(SCFM.pInpBuf,SCFM.InBufSz,"SCFDMAModulationRandomInputReal","SCFDMAModulationRandomInputImag");
+//GeneRandomInput(SCFM.pInpBuf,SCFM.InBufSz);
+SCFM.SCFDMAModulating(&SCFMOut);
+WriteOutputToFiles(&SCFMOut,(SCFM.OutBufSz),"testSCFDMAModulationOutputReal","testSCFDMAModulationOutputImag");
+//ReadOutput(&SCFMOut,(SCFM.OutBufSz));
 return 0;
 }
 #endif
@@ -61,14 +61,14 @@ BSPara BS;
 BS.initBSPara();
 UserPara User(&BS);
 SCFDMADemodulation SCFD(&BS);
-FIFO<complex<float> > SCFDIn(1,SCFD.InBufSz);
+//FIFO<complex<float> > SCFDIn(1,SCFD.InBufSz);
 FIFO<complex<float> > SCFDOut(1,SCFD.OutBufSz);
-//ReadInputFromFiles(&SCFDIn,(SCFD.InBufSz),"SCFDMADemodulationInputReal","SCFDMADemodulationInputImag");
-//GeneRandomInput(&SCFDIn,SCFD.InBufSz,"SCFDMADemodulationRandomInputReal","SCFDMADemodulationRandomInputImag");
-GeneRandomInput(&SCFDIn,SCFD.InBufSz);
-SCFD.SCFDMADemodulating(&SCFDIn,&SCFDOut);
-//WriteOutputToFiles(&SCFDOut,(SCFD.OutBufSz),"SCFDMADemodulationOutputReal","SCFDMADemodulationOutputImag");
-ReadOutput(&SCFDOut,(SCFD.OutBufSz));
+ReadInputFromFiles(SCFD.pInpBuf,(SCFD.InBufSz),"SCFDMADemodulationInputReal","SCFDMADemodulationInputImag");
+//GeneRandomInput(SCFD.pInpBuf,SCFD.InBufSz,"SCFDMADemodulationRandomInputReal","SCFDMADemodulationRandomInputImag");
+//GeneRandomInput(SCFD.pInpBuf,SCFD.InBufSz);
+SCFD.SCFDMADemodulating(&SCFDOut);
+WriteOutputToFiles(&SCFDOut,(SCFD.OutBufSz),"testSCFDMADemodulationOutputReal","testSCFDMADemodulationOutputImag");
+//ReadOutput(&SCFDOut,(SCFD.OutBufSz));
 return 0;
 }
 #endif

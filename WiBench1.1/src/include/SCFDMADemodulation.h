@@ -59,9 +59,12 @@ int SymNum;
 
 public:
 int InBufSz[2];
+//SCFDMADemodulation's FIFO
+FIFO<complex<float> > *pInpBuf;
 int OutBufSz[2];
 
     SCFDMADemodulation(BSPara* pBS);
-    void SCFDMADemodulating(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf);
+//    void SCFDMADemodulating(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf);
+    void SCFDMADemodulating(FIFO<complex<float> >* pOutBuf);
     ~SCFDMADemodulation(void);
 };

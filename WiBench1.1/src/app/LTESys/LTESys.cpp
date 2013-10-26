@@ -84,41 +84,6 @@ TurboDecoder_c RxTbD(&BS);
 //////////////////// Completed construction of the kernels/////////////////
 
 ////////////////// allocate the FIFOs /////////////////////////
-int TxDSsz[2]={1,DataK};
-
-FIFO<int> TxDataSource(1,TxDSsz);
-
-FIFO<int> TxTbEBufRM(1,TxTbE.OutBufSz);
-
-FIFO<int> TxRMBufSCRB(1,TxRM.OutBufSz);
-
-FIFO<int> TxSCRBBufM(1,TxSCRB.OutBufSz);
-
-FIFO<complex<float> > TxMBufTP(1,TxM.OutBufSz);
-
-FIFO<complex<float> > TxTPBufSCM(1,TxTP.OutBufSz);
-
-FIFO<complex<float> > TxSCMBufSCFM(1,TxSCM.OutBufSz);
-
-FIFO<complex<float> > TxFileSink(1,TxSCFM.OutBufSz);
-
-
-FIFO<complex<float> > RxDataSource(1,TxCRx.OutBufSz);
-
-FIFO<complex<float> > RxSCFDBufSCD(1,RxSCFD.OutBufSz);
-
-FIFO<complex<float> > RxSCDBufE(1,RxSCD.OutBufSz);
-
-FIFO<complex<float> > RxEBufTD(1,RxE.OutBufSz);
-
-FIFO<complex<float> > RxTDBufD(1,RxTD.OutBufSz);
-
-FIFO<float> RxDBufDSCRB(1,RxD.OutBufSz);
-
-FIFO<float> RxDSCRBBufRM(1,RxDSCRB.OutBufSz);
-
-FIFO<float> RxRMBufTbD(1,RxRM.OutBufSz);
-
 FIFO<int> RxFileSink(1,RxTbD.OutBufSz);
 //////////////////End of allocation of FIFOs /////////////////////////
 
@@ -144,46 +109,62 @@ while((nrun<MAXRUN))
 ////////////////////////// Run Subframe //////////////////////////////////
  RANDOMSEED=(nrun+1)*(nsnr+2);
 
- GenerateLTEChainInput(&TxDataSource,DataK,pTxDS);
 
- TxTbE.TurboEncoding(&TxDataSource,&TxTbEBufRM);
-
- TxRM.TxRateMatching(&TxTbEBufRM,&TxRMBufSCRB);
+ GenerateLTEChainInput(TxTbE.pInpBuf,DataK,pTxDS);
 
 
+ TxTbE.TurboEncoding(TxRM.pInpBuf);
 
 
- TxSCRB.Scrambling(&TxRMBufSCRB,&TxSCRBBufM);
+ TxRM.TxRateMatching(TxSCRB.pInpBuf);
+
+
+  TxSCRB.Scrambling(TxM.pInpBuf);
  
- TxM.Modulating(&TxSCRBBufM,&TxMBufTP);
 
- TxTP.TransformPrecoding(&TxMBufTP,&TxTPBufSCM);
+ TxM.Modulating(TxTP.pInpBuf);
 
- TxSCM.SubCarrierMapping(&TxTPBufSCM,&TxSCMBufSCFM);
 
- TxSCFM.SCFDMAModulating(&TxSCMBufSCFM,&TxFileSink);
+ TxTP.TransformPrecoding(TxSCM.pInpBuf);
 
+
+ TxSCM.SubCarrierMapping(TxSCFM.pInpBuf);
+
+
+ TxSCFM.SCFDMAModulating(TxCRx.pInpBuf);
  
- TxCRx.ApplyChannel(&TxFileSink,&RxDataSource,(AWGNSigmaArray[nsnr]));
 
- RxSCFD.SCFDMADemodulating(&RxDataSource,&RxSCFDBufSCD);
-// RxSCFD.SCFDMADemodulating(&TxFileSink,&RxSCFDBufSCD);
+ TxCRx.ApplyChannel(RxSCFD.pInpBuf,(AWGNSigmaArray[nsnr]));
 
- RxSCD.SubCarrierDemapping(&RxSCFDBufSCD,&RxSCDBufE);
 
-// RxE.Equalizing(&RxSCDBufE,&RxEBufTD,TxCRx.GetpPCSI(),TxCRx.GetAWGNNo());
- RxE.Equalizing(&RxSCDBufE,&RxEBufTD);
+ RxSCFD.SCFDMADemodulating(RxSCD.pInpBuf);
 
- RxTD.TransformDecoding(&RxEBufTD,&RxTDBufD);
-// RxD.Demodulating(&RxTDBufD,&RxDBufDSCRB,RxE.GetpEqW(),RxE.GetpHdm(),(AWGNSigmaArray[nsnr]));
 
- RxD.Demodulating(&RxTDBufD,&RxDBufDSCRB,(AWGNSigmaArray[nsnr]));
-// RxD.Demodulating(&RxTDBufD,&RxDBufDSCRB,((float)0.0));
+ RxSCD.SubCarrierDemapping(RxE.pInpBuf);
 
- RxDSCRB.Descrambling(&RxDBufDSCRB,&RxDSCRBBufRM);
 
- RxRM.RxRateMatching(&RxDSCRBBufRM,&RxRMBufTbD);
- RxTbD.TurboDecoding(&RxRMBufTbD,&RxFileSink);
+// RxE.Equalizing(RxTD.pInpBuf,TxCRx.GetpPCSI(),TxCRx.GetAWGNNo());
+
+ RxE.Equalizing(RxTD.pInpBuf);
+
+
+ RxTD.TransformDecoding(RxD.pInpBuf);
+
+
+// RxD.Demodulating(RxDSCRB.pInpBuf,RxE.GetpEqW(),RxE.GetpHdm(),(AWGNSigmaArray[nsnr]));
+
+ RxD.Demodulating(RxDSCRB.pInpBuf,(AWGNSigmaArray[nsnr]));
+
+// RxD.Demodulating(RxDSCRB.pInpBuf,((float)0.0));
+
+
+ RxDSCRB.Descrambling(RxRM.pInpBuf);
+
+
+ RxRM.RxRateMatching(RxTbD.pInpBuf);
+
+
+ RxTbD.TurboDecoding(&RxFileSink);
 
 
  ReadLTEChainOutput(&RxFileSink,pRxFS);

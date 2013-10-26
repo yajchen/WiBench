@@ -67,7 +67,10 @@ if(BufFlag)
 else
 {}
 //////////////////////End of clac in/out buffer size//////////////////////
-
+////////////////////// Initialize its own Input Buffer //////////////////////////
+pInpBuf =new FIFO<complex<float> >[1];
+(*pInpBuf).initFIFO(1,InBufSz);
+//////////////////End of initialization of its own input buffer//////////////////
 }
 
 void Channel::ApplyFading()
@@ -270,7 +273,7 @@ for(int i=0;i<NumRxAntenna*NumULSymbSF;i++)
 }
 }
 
-void Channel::ApplyChannel(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf)
+void Channel::ApplyChannel(FIFO<complex<float> >* pOutBuf)
 {
 if(PSFlag)
 {cout<<"Applying Channel"<<endl;}
@@ -338,12 +341,12 @@ if(PSFlag)
 
 }
 
-void Channel::ApplyChannel(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf,float awgnSigma)
+void Channel::ApplyChannel(FIFO<complex<float> >* pOutBuf,float awgnSigma)
 {
 
 AWGNSigma=awgnSigma;
 AWGNFlag=true;
-ApplyChannel(pInpBuf,pOutBuf);
+ApplyChannel(pOutBuf);
 }
 
 Channel::~Channel()
@@ -351,4 +354,5 @@ Channel::~Channel()
 for(int i=0;i<MaxTxAnt;i++){for(int j=0;j<MaxRxAnt;j++){delete[] *(*(pPCSI+i)+j);}}
 for(int i=0;i<MaxTxAnt;i++){delete[] *(pPCSI+i);}
 delete[] pPCSI;
+delete[] pInpBuf;
 }

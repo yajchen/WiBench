@@ -89,11 +89,15 @@ void ApplyAWGN(complex<float>** pInMatrix);
 
 public:
 int InBufSz[2];
+//Channel's FIFO
+FIFO<complex<float> > *pInpBuf;
 int OutBufSz[2];
 
   Channel(BSPara* pBS);
-  void ApplyChannel(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf);
-  void ApplyChannel(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf,float AWGNSigma);
+//  void ApplyChannel(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf);
+//  void ApplyChannel(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf,float AWGNSigma);
+  void ApplyChannel(FIFO<complex<float> >* pOutBuf);
+  void ApplyChannel(FIFO<complex<float> >* pOutBuf,float AWGNSigma);
   complex<float>*** GetpPCSI(void)const{return pPCSI;}
   float GetAWGNNo(void) const {return 2.0*pow(AWGNSigma,2.0);};
   ~Channel(void);

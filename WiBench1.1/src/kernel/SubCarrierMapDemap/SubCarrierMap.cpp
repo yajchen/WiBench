@@ -67,10 +67,13 @@ if(BufFlag)
 else
 {}
 //////////////////////End of clac in/out buffer size//////////////////////
-
+////////////////////// Initialize its own Input Buffer //////////////////////////
+pInpBuf =new FIFO<complex<float> >[1];
+(*pInpBuf).initFIFO(1,InBufSz);
+//////////////////End of initialization of its own input buffer//////////////////
 }
 
-void SubCarrierMap::SubCarrierMapping(FIFO<complex<float> > *pInpBuf, FIFO<complex<float> > *pOutBuf)
+void SubCarrierMap::SubCarrierMapping(FIFO<complex<float> > *pOutBuf)
 {
 if(PSFlag)
 {cout<<"SubCarrierMapping"<<endl;}
@@ -122,4 +125,5 @@ for(int i=0;i<(NumULSymbSF-2)*NumLayer;i++){delete[] *(pInpData+i);}
 delete[] pInpData;
 for(int i=0;i<NumULSymbSF*NumLayer;i++){delete[] *(pOutData+i);}
 delete[] pOutData;
+delete[] pInpBuf;
 }

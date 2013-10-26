@@ -40,16 +40,16 @@ UserPara User(&BS);
 Channel Ch(&BS);
 RANDOMSEED = 2;  //this is the seed for ChannelInputReal/Imag
 float sigma = 0.193649; //This is the seed for ChannelInputReal/Imag
-FIFO<complex<float> > ChIn(1,Ch.InBufSz);
+//FIFO<complex<float> > ChIn(1,Ch.InBufSz);
 FIFO<complex<float> > ChOut(1,Ch.OutBufSz);
 
-//ReadInputFromFiles(&ChIn,(Ch.InBufSz),"ChannelInputReal","ChannelInputImag");
-//GeneRandomInput(&ChIn,Ch.InBufSz,"ChannelRandomInputReal","ChannelRandomInputImag");
-GeneRandomInput(&ChIn,Ch.InBufSz);
-Ch.ApplyChannel(&ChIn,&ChOut,sigma);
-//Ch.ApplyChannel(&ChIn,&ChOut);
-//WriteOutputToFiles(&ChOut,(Ch.OutBufSz),"ChannelOutputReal","ChannelOutputImag");
+ReadInputFromFiles(Ch.pInpBuf,(Ch.InBufSz),"ChannelInputReal","ChannelInputImag");
+//GeneRandomInput(Ch.pInpBuf,Ch.InBufSz,"ChannelRandomInputReal","ChannelRandomInputImag");
+//GeneRandomInput(Ch.pInpBuf,Ch.InBufSz);
+Ch.ApplyChannel(&ChOut,sigma);
+//Ch.ApplyChannel(&ChOut);
+WriteOutputToFiles(&ChOut,(Ch.OutBufSz),"testChannelOutputReal","testChannelOutputImag");
 //WriteOutputToFiles(&ChOut,(Ch.OutBufSz),"ChannelRandomOutputReal","ChannelRandomOutputImag");
-ReadOutput(&ChOut,(Ch.OutBufSz));
+//ReadOutput(&ChOut,(Ch.OutBufSz));
 
 }

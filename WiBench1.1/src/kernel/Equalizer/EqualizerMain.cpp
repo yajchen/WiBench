@@ -39,15 +39,15 @@ BS.initBSPara();
 UserPara User(&BS);
 Equalizer Eq(&BS,&User);
 
-FIFO<complex<float> > EqIn(1,Eq.InBufSz);
+//FIFO<complex<float> > EqIn(1,Eq.InBufSz);
 FIFO<complex<float> > EqOut(1,Eq.OutBufSz);
 
-//ReadInputFromFiles(&EqIn,(Eq.InBufSz),"LSCELSEqInputReal","LSCELSEqInputImag");
-//GeneRandomInput(&EqIn,Eq.InBufSz,"LSCELSEqRandomInputReal","LSCELSEqRandomInputImag");
-GeneRandomInput(&EqIn,Eq.InBufSz);
-Eq.Equalizing(&EqIn,&EqOut);
-//WriteOutputToFiles(&EqOut,(Eq.OutBufSz),"LSCELSEqOutputReal","LSCELSEqOutputImag");
+ReadInputFromFiles(Eq.pInpBuf,(Eq.InBufSz),"LSCELSEqInputReal","LSCELSEqInputImag");
+//GeneRandomInput(Eq.pInpBuf,Eq.InBufSz,"LSCELSEqRandomInputReal","LSCELSEqRandomInputImag");
+//GeneRandomInput(Eq.pInpBuf,Eq.InBufSz);
+Eq.Equalizing(&EqOut);
+WriteOutputToFiles(&EqOut,(Eq.OutBufSz),"testLSCELSEqOutputReal","testLSCELSEqOutputImag");
 //WriteOutputToFiles(&EqOut,(Eq.OutBufSz),"LSCELSEqRandomOutputReal","LSCELSEqRandomOutputImag");
-ReadOutput(&EqOut,(Eq.OutBufSz));
+//ReadOutput(&EqOut,(Eq.OutBufSz));
 
 }

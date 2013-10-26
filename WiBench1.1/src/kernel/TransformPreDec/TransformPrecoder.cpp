@@ -58,11 +58,14 @@ if(BufFlag)
 else
 {}
 //////////////////////End of clac in/out buffer size//////////////////////
-
+////////////////////// Initialize its own Input Buffer //////////////////////////
+pInpBuf =new FIFO<complex<float> >[1];
+(*pInpBuf).initFIFO(1,InBufSz);
+//////////////////End of initialization of its own input buffer//////////////////
 
 }
 
-void TransformPrecoder::TransformPrecoding(FIFO<complex<float> > *pInpBuf, FIFO<complex<float> > *pOutBuf) 
+void TransformPrecoder::TransformPrecoding(FIFO<complex<float> > *pOutBuf) 
 {
 
 if(PSFlag)
@@ -104,5 +107,5 @@ delete[] pQAMSeq;
 for(int nsym=0;nsym<(NumULSymbSF-2)*NumLayer;nsym++){delete[] *(pDataMatrix+nsym);}
 delete[] pDataMatrix;
 fftwf_destroy_plan(fftplan);
-
+delete[] pInpBuf;
 }

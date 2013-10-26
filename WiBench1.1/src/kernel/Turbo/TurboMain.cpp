@@ -31,7 +31,7 @@
 
 #include "TurboMain.h"
 int RANDOMSEED;
-#define TurboEnc
+#define TurboDec
 
 using namespace std;
 
@@ -47,14 +47,14 @@ BSPara BS;
 BS.initBSPara();
 UserPara User(&BS);
 TurboEncoder_c TbE(&User);
-FIFO<int> TbEIn(1,TbE.InBufSz);
+//FIFO<int> TbEIn(1,TbE.InBufSz);
 FIFO<int> TbEOut(1,TbE.OutBufSz);
-//ReadInputFromFiles(&TbEIn,(TbE.InBufSz),"TurboEncoderInput");
-//GeneRandomInput(&TbEIn,TbE.InBufSz,"TurboEncoderRandomInput");
-GeneRandomInput(&TbEIn,TbE.InBufSz);
-TbE.TurboEncoding(&TbEIn,&TbEOut);
-//WriteOutputToFiles(&TbEOut,(TbE.OutBufSz),"TurboEncoderOutput");
-ReadOutput(&TbEOut,(TbE.OutBufSz));
+ReadInputFromFiles(TbE.pInpBuf,(TbE.InBufSz),"TurboEncoderInput");
+//GeneRandomInput(TbE.pInpBuf,TbE.InBufSz,"TurboEncoderRandomInput");
+//GeneRandomInput(TbE.pInpBuf,TbE.InBufSz);
+TbE.TurboEncoding(&TbEOut);
+WriteOutputToFiles(&TbEOut,(TbE.OutBufSz),"testTurboEncoderOutput");
+//ReadOutput(&TbEOut,(TbE.OutBufSz));
 return 0;
 }
 #endif
@@ -67,14 +67,14 @@ BSPara BS;
 BS.initBSPara();
 UserPara User(&BS);
 TurboDecoder_c TbD(&BS);
-FIFO<float> TbDIn(1,TbD.InBufSz);
+//FIFO<float> TbDIn(1,TbD.InBufSz);
 FIFO<int> TbDOut(1,TbD.OutBufSz);
-//ReadInputFromFiles(&TbDIn,TbD.InBufSz,"TurboDecoderInput");
-//GeneRandomInput(&TbDIn,TbD.InBufSz,"TurboDecoderRandomInput");
-GeneRandomInput(&TbDIn,TbD.InBufSz);
-TbD.TurboDecoding(&TbDIn,&TbDOut);
-//WriteOutputToFiles(&TbDOut,TbD.OutBufSz,"TurboDecoderRandomOutput");
-ReadOutput(&TbDOut,TbD.OutBufSz);
+ReadInputFromFiles(TbD.pInpBuf,TbD.InBufSz,"TurboDecoderInput");
+//GeneRandomInput(TbD.pInpBuf,TbD.InBufSz,"TurboDecoderRandomInput");
+//GeneRandomInput(TbD.pInpBuf,TbD.InBufSz);
+TbD.TurboDecoding(&TbDOut);
+WriteOutputToFiles(&TbDOut,TbD.OutBufSz,"testTurboDecoderOutput");
+//ReadOutput(&TbDOut,TbD.OutBufSz);
 return 0;
 }
 #endif

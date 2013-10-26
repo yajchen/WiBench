@@ -56,7 +56,7 @@ int EstimationMethod;
 
 UserPara* VpUser;
 complex<float>*** pDMRS;
-FIFO<complex<float> >* VpInpBuf;
+//FIFO<complex<float> >* VpInpBuf;
 FIFO<complex<float> >* VpOutBuf;
 
 complex<float>** pInpData;
@@ -76,11 +76,15 @@ void LSFreqDomain(void);
 
 public:
 int InBufSz[2];
+//Equalizer's FIFO
+FIFO<complex<float> >* pInpBuf;
 int OutBufSz[2];
 
   Equalizer(BSPara* pBS, UserPara* pUser);
-  void Equalizing(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf);
-  void Equalizing(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf,complex<float>***pPCSI,float AWGNNo);
+//  void Equalizing(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf);
+//  void Equalizing(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf,complex<float>***pPCSI,float AWGNNo);
+  void Equalizing(FIFO<complex<float> >* pOutBuf);
+  void Equalizing(FIFO<complex<float> >* pOutBuf,complex<float>***pPCSI,float AWGNNo);
   complex<float> ***GetpEqW(void) const {return pEqW;}
   complex<float> ***GetpHdm(void) const {return pHdm;}
   ~Equalizer(void);

@@ -61,10 +61,13 @@ int maxNum(int a,int b);
 int maxElen(int num,int *p,int pos,int space);
 public:
 int InBufSz[2];
+//Turbo Encoder's FIFO
+FIFO<int> *pInpBuf;
 int OutBufSz[2];
 
   TurboEncoder_c(UserPara* pUser);
-  void TurboEncoding(FIFO<int> *pInpBuf,FIFO<int> *pOutBuf);
+//  void TurboEncoding(FIFO<int> *pInpBuf,FIFO<int> *pOutBuf);
+  void TurboEncoding(FIFO<int> *pOutBuf);
   ~TurboEncoder_c(void);  
 };
 

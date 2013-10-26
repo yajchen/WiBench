@@ -85,9 +85,13 @@ if(BufFlag)
 else
 {}
 //////////////////////End of clac in/out buffer size//////////////////////
+////////////////////// Initialize its own Input Buffer //////////////////////////
+pInpBuf =new FIFO<float>[1];
+(*pInpBuf).initFIFO(1,InBufSz);
+//////////////////End of initialization of its own input buffer//////////////////
 }
 
-void Descramble::Descrambling(FIFO<float>* pInpBuf,FIFO<float>* pOutBuf)
+void Descramble::Descrambling(FIFO<float>* pOutBuf)
 {
  if(PSFlag)
  {cout<<"Descrambling"<<endl;  }
@@ -117,5 +121,5 @@ Descramble::~Descramble()
   delete[] pInpSeq;
   delete[] pScrambSeq;
   delete[] pOutSeq;
-
+  delete[] pInpBuf;
 }

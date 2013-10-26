@@ -67,7 +67,10 @@ if(BufFlag)
 else
 {}
 ////////////////End clac in/out buffer size///////////////
-
+////////////////////// Initialize its own Input Buffer //////////////////////////
+pInpBuf =new FIFO<int>[1];
+(*pInpBuf).initFIFO(1,InBufSz);
+//////////////////End of initialization of its own input buffer//////////////////
 }
 
 
@@ -82,7 +85,7 @@ int TurboEncoder_c::maxElen(int num,int *p,int pos,int space)
         return mamm;
 }
 
-void TurboEncoder_c::TurboEncoding(FIFO<int> *pInpBuf, FIFO<int> *pOutBuf)
+void TurboEncoder_c::TurboEncoding(FIFO<int> *pOutBuf)
 {
 if(PSFlag)
 {cout<<"TurboEncoding"<<endl;}
@@ -237,4 +240,5 @@ delete[] pLengthSet;
 delete[] piSeq;
 for(int r=0;r<Rate;r++){delete[] *(pcSeq+r);}
 delete[] pcSeq;
+delete[] pInpBuf;
 }

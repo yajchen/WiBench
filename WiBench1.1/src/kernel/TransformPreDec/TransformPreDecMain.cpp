@@ -32,7 +32,7 @@
 
 #include "TransformPreDecMain.h"
 int RANDOMSEED;
-#define TransformDec
+#define TransformPre
 
 #ifdef TransformPre
 int main()
@@ -42,15 +42,15 @@ BSPara BS;
 BS.initBSPara();
 UserPara User(&BS);
 TransformPrecoder TP(&User);
-FIFO<complex<float> > TPIn(1,TP.InBufSz);
+//FIFO<complex<float> > TPIn(1,TP.InBufSz);
 FIFO<complex<float> > TPOut(1,TP.OutBufSz);
-//ReadInputFromFiles(&TPIn,(TP.InBufSz),"TransformPrecoderInputReal","TransformPrecoderInputImag");
-//GeneRandomInput(&TPIn,TP.InBufSz,"TransformPrecoderRandomInputReal","TransformPrecoderRandomInputImag");
-GeneRandomInput(&TPIn,TP.InBufSz);
-TP.TransformPrecoding(&TPIn,&TPOut);
-//WriteOutputToFiles(&TPOut,(TP.OutBufSz),"TransformPrecoderOutputReal","TransformPrecoderOutputImag");
+ReadInputFromFiles(TP.pInpBuf,(TP.InBufSz),"TransformPrecoderInputReal","TransformPrecoderInputImag");
+//GeneRandomInput(TP.pInpBuf,TP.InBufSz,"TransformPrecoderRandomInputReal","TransformPrecoderRandomInputImag");
+//GeneRandomInput(TP.pInpBuf,TP.InBufSz);
+TP.TransformPrecoding(&TPOut);
+WriteOutputToFiles(&TPOut,(TP.OutBufSz),"testTransformPrecoderOutputReal","testTransformPrecoderOutputImag");
 //WriteOutputToFiles(&TPOut,(TP.OutBufSz),"TransformPrecoderRandomOutputReal","TransformPrecoderRandomOutputImag");
-ReadOutput(&TPOut,(TP.OutBufSz));
+//ReadOutput(&TPOut,(TP.OutBufSz));
 
 return 0;
 }
@@ -64,15 +64,15 @@ BSPara BS;
 BS.initBSPara();
 UserPara User(&BS);
 TransformDecoder TD(&BS);
-FIFO<complex<float> > TDIn(1,TD.InBufSz);
+//FIFO<complex<float> > TDIn(1,TD.InBufSz);
 FIFO<complex<float> > TDOut(1,TD.OutBufSz);
-//ReadInputFromFiles(&TDIn,(TD.InBufSz),"TransformDecoderInputReal","TransformDecoderInputImag");
-//GeneRandomInput(&TDIn,TD.InBufSz,"TransformDecoderRandomInputReal","TransformDecoderRandomInputImag");
-GeneRandomInput(&TDIn,TD.InBufSz);
-TD.TransformDecoding(&TDIn,&TDOut);
-//WriteOutputToFiles(&TDOut,(TD.OutBufSz),"TransformDecoderOutputReal","TransformDecoderOutputImag");
+ReadInputFromFiles(TD.pInpBuf,(TD.InBufSz),"TransformDecoderInputReal","TransformDecoderInputImag");
+//GeneRandomInput(TD.pInpBuf,TD.InBufSz,"TransformDecoderRandomInputReal","TransformDecoderRandomInputImag");
+//GeneRandomInput(TD.pInpBuf,TD.InBufSz);
+TD.TransformDecoding(&TDOut);
+WriteOutputToFiles(&TDOut,(TD.OutBufSz),"testTransformDecoderOutputReal","testTransformDecoderOutputImag");
 //WriteOutputToFiles(&TDOut,(TD.OutBufSz),"TransformDecoderRandomOutputReal","TransformDecoderRandomOutputImag");
-ReadOutput(&TDOut,(TD.OutBufSz));
+//ReadOutput(&TDOut,(TD.OutBufSz));
 return 0;
 }
 #endif

@@ -72,10 +72,13 @@ if(BufFlag)
 else
 {}
 //////////////////////End of clac in/out buffer size//////////////////////
-
+////////////////////// Initialize its own Input Buffer //////////////////////////
+pInpBuf =new FIFO<int>[1];
+(*pInpBuf).initFIFO(1,InBufSz);
+//////////////////End of initialization of its own input buffer//////////////////
 }
 
-void Scramble::Scrambling(FIFO<int> *pInpBuf,FIFO<int> *pOutBuf)
+void Scramble::Scrambling(FIFO<int> *pOutBuf)
 {
 if(PSFlag)
 {cout<<"Scrambling"<<endl;}
@@ -106,4 +109,5 @@ Scramble::~Scramble()
 delete[] pInpSeq;
 delete[] pScrambSeq;
 delete[] pOutSeq;
+delete[] pInpBuf;
 }

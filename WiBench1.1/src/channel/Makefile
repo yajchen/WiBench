@@ -1,12 +1,15 @@
-C = gcc
-CC = g++
-UTILPATH = ../Util/
-INCPATH = ../INC/
-SRC = $(UTILPATH)BSPara.cpp $(UTILPATH)FIFO.cpp $(UTILPATH)gauss.cpp $(UTILPATH)matrix.cpp $(UTILPATH)UserPara.cpp $(UTILPATH)GeneralFunc.cpp ChannelMain.cpp Channel.cpp 
+include ../../common/makefile.config
+
+SRC = Channel.cpp ChannelMain.cpp
+SRC += $(UTIL_DIR)/BSPara.cpp $(UTIL_DIR)/FIFO.cpp $(UTIL_DIR)/gauss.cpp $(UTIL_DIR)/matrix.cpp $(UTIL_DIR)/UserPara.cpp $(UTIL_DIR)/GeneralFunc.cpp 
+
 EXE = Ch.out
 
-all: $(SRC)
-	$(CC) $(SRC) -I $(INCPATH) -o $(EXE) -lfftw3f -O3
+CXXFLAGS += -lfftw3f
+
+all:
+	$(CXX) $(SRC) $(CXXFLAGS) -o $(EXE)
+	cp $(EXE) $(KERNEL_BUILD_DIR)	
 
 clean:
 	rm $(EXE) -rf

@@ -54,9 +54,12 @@ float* pScrambSeq;
 float* pOutSeq;
 public:
 int InBufSz[2];
+//Descrambler's FIFO
+FIFO<float> *pInpBuf;
 int OutBufSz[2];
 
   Descramble(BSPara* pBS);
-  void Descrambling(FIFO<float>* pInpBuf,FIFO<float>* pOutBuf);
+//  void Descrambling(FIFO<float>* pInpBuf,FIFO<float>* pOutBuf);
+  void Descrambling(FIFO<float>* pOutBuf);
   ~Descramble(void);
 };

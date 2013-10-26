@@ -62,10 +62,13 @@ if(BufFlag)
 else
 {}
 //////////////////////End of clac in/out buffer size//////////////////////
-
+////////////////////// Initialize its own Input Buffer //////////////////////////
+pInpBuf =new FIFO<complex<float> >[1];
+(*pInpBuf).initFIFO(1,InBufSz);
+//////////////////End of initialization of its own input buffer//////////////////
 }
 
-void TransformDecoder::TransformDecoding(FIFO<complex<float> >* pInpBuf,FIFO<complex<float> >* pOutBuf)
+void TransformDecoder::TransformDecoding(FIFO<complex<float> >* pOutBuf)
 {
  
 if(PSFlag)
@@ -103,4 +106,5 @@ TransformDecoder::~TransformDecoder()
     delete[] pDecQAMSeq;
     for(int s=0;s<SymbNum;s++){delete[] *(pDataMatrix+s);}
     delete[] pDataMatrix;
+    delete[] pInpBuf;
 }

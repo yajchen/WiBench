@@ -50,9 +50,12 @@ complex<float>** pDataMatrix;
 fftwf_plan fftplan;
 public:
 int InBufSz[2];
+//Transform Precoder's FIFO
+FIFO<complex<float> > *pInpBuf;
 int OutBufSz[2];
 
     TransformPrecoder(UserPara* pUser);
-    void TransformPrecoding(FIFO<complex<float> > *pInpBuf, FIFO<complex<float> > *pOutBuf);
+//    void TransformPrecoding(FIFO<complex<float> > *pInpBuf, FIFO<complex<float> > *pOutBuf);
+    void TransformPrecoding(FIFO<complex<float> > *pOutBuf);
     ~TransformPrecoder(void);
 };

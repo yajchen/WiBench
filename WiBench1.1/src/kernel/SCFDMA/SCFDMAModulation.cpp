@@ -64,10 +64,13 @@ if(BufFlag)
 else
 {}
 //////////////////////End of clac in/out buffer size//////////////////////
-
+////////////////////// Initialize its own Input Buffer //////////////////////////
+pInpBuf =new FIFO<complex<float> >[1];
+(*pInpBuf).initFIFO(1,InBufSz);
+//////////////////End of initialization of its own input buffer//////////////////
 }
 
-void SCFDMAModulation::SCFDMAModulating(FIFO<complex<float> > *pInpBuf, FIFO<complex<float> > *pOutBuf)
+void SCFDMAModulation::SCFDMAModulating(FIFO<complex<float> > *pOutBuf)
 {
 //cout<<"SCFDMAModulating"<<endl;
 if(PSFlag)
@@ -124,4 +127,5 @@ delete[] pInpData;
 delete[] pOutData;
 fftwf_destroy_plan(ifftplan);
 delete[] out;
+delete[] pInpBuf;
 }

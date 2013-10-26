@@ -53,9 +53,12 @@ complex<float>** pOutData;
 
 public:
 int InBufSz[2];
+//SubCarrierMapper's FIFO
+FIFO<complex<float> > *pInpBuf;
 int OutBufSz[2];
 
     SubCarrierMap(UserPara* pUser);
-    void SubCarrierMapping(FIFO<complex<float> > *pInpBuf, FIFO<complex<float> > *pOutBuf);
+//    void SubCarrierMapping(FIFO<complex<float> > *pInpBuf, FIFO<complex<float> > *pOutBuf);
+    void SubCarrierMapping(FIFO<complex<float> > *pOutBuf);
     ~SubCarrierMap(void);
 };

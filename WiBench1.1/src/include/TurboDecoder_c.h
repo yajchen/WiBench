@@ -104,10 +104,13 @@ void pccc_decoder_bb(
 
 public:
 int InBufSz[2];
+//Turbo Decoder's FIFO
+FIFO<float> *pInpBuf;
 int OutBufSz[2];
 
   TurboDecoder_c(BSPara* pBS);
-  void TurboDecoding(FIFO<float>* pInpBuf,FIFO<int>* pOutBuf);
+//  void TurboDecoding(FIFO<float>* pInpBuf,FIFO<int>* pOutBuf);
+  void TurboDecoding(FIFO<int>* pOutBuf);
   ~TurboDecoder_c();
   
 };

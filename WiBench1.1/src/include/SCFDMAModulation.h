@@ -51,9 +51,12 @@ fftwf_plan ifftplan;
 
 public:
 int InBufSz[2];
+//SCFDMAModulation's FIFO
+FIFO<complex<float> > *pInpBuf;
 int OutBufSz[2];
 
     SCFDMAModulation(UserPara* pUser);
-    void SCFDMAModulating(FIFO<complex<float> > *pInpBuf, FIFO<complex<float> > *pOutBuf);
+//    void SCFDMAModulating(FIFO<complex<float> > *pInpBuf, FIFO<complex<float> > *pOutBuf);
+    void SCFDMAModulating(FIFO<complex<float> > *pOutBuf);
     ~SCFDMAModulation(void);
 };
